@@ -3,6 +3,7 @@ import { text as xhrText } from 'lib/xhr';
 import { requestIdleCallback, $as } from 'lib';
 import { spinnerHtml } from 'lib/controls';
 import { pubsub } from 'lib/pubsub';
+import * as he from 'he';
 
 // Thanks Steven Benner! - adapted from https://github.com/stevenbenner/jquery-powertip
 
@@ -57,7 +58,7 @@ const imagePowertip = (el: HTMLElement) =>
       preRender: (el: HTMLElement) => {
         const w = el.dataset.width ? ` width="${el.dataset.width}"` : '';
         const h = el.dataset.height ? ` height="${el.dataset.height}"` : '';
-        document.querySelector('#image-powertip')!.innerHTML = `<img src="${el.dataset.src}"${w}${h}>`;
+        document.querySelector('#image-powertip')!.innerHTML = `<img src="${he.escape(el.dataset.src)}"${w}${h}>`;
       },
       popupId: 'image-powertip',
       placement: 's',
